@@ -1,31 +1,65 @@
 import numpy as np
+import csv
+from geopy.distance import great_circle
 
 class Data:
     def __init__(self):
+        # Load the cities database
+        self.cities_db = {}
+        with open('cities.csv', encoding='utf-8-sig') as csvcities:
+            cityreader = csv.reader(csvcities, delimiter=';', quotechar='\"')
+            for city in cityreader:
+                self.cities_db[city[0]] = [float(city[1]), float(city[2])]
 
-        # SAMPLE DATA TODO: Load data from a file
+                self.start_city = None
+
+        # Load the task
+        self.visited_cities = []
+        with open('task.csv', encoding='utf-8-sig') as csvtask:
+            cityreader = csv.reader(csvtask, delimiter=';', quotechar='\"')
+            for visit in cityreader:
+                if self.start_city is None:
+                    self.start_city = visit[0]
+                else:
+                    self.visited_cities.append([visit[0], float(visit[1])])
+
         # The number of cities visited
-        self.N = 5
-        # Adjacency matrix of the cities graph
-        self.adjM = np.matrix([[0, 3, 6, 9, 12],
-                               [3, 0, 3, 6, 9],
-                               [6, 3, 0, 3, 6],
-                               [9, 6, 3, 0, 3],
-                               [12, 9, 6, 3, 0]])
-        # Distances from the start city to the other cities
-        self.city_dists = np.array([5, 8, 11, 14, 17])
-        # Names of the cities
-        self.start_name = 'X'
-        self.city_names = ['A', 'B', 'C', 'D', 'E']
+        self.N = len(self.visited_cities)
+
+        # Calculate distances from the start city to the other cities
+        self.city_dists = np.zeros(self.N)
+        for idx, city in enumerate(self.visited_cities):
+            self.city_dists[idx] = self.distance(self.start_city, city[0])
+
+        # Names of the cities'
+        self.city_names = [self.visited_cities[i][0] for i in range(self.N)]
+
+        # Calculate the adjacency matrix of the cities graph
+        self.adjM = np.zeros([self.N]*2)
+        for i, src in enumerate(self.city_names):
+            for j, dst in enumerate(self.city_names):
+                if i != j:
+                    self.adjM[i, j] = self.distance(src, dst)
+
         # The distributed masses
-        self.masses = np.array([100]*self.N)
+        self.masses = np.array([self.visited_cities[i][1] for i in range(self.N)])
 
         # Mass transportation cost parameters (cost(mass, distance) = (m_a*mass + m_b) * distance)
-        self.m_a = 0
-        self.m_b = 1
+        self.m_a = 0.001
+        self.m_b = 0.0001
 
         # Calculate the sum of distributed masses
         self.masses_sum = np.sum(self.masses)
+
+    def distance(self, city1, city2):
+        """
+        Calculates the distance between two cities 
+        :param city1: city1 name
+        :param city2: city2 name
+        :return: distance in km
+        """
+
+        return great_circle(self.cities_db[city1], self.cities_db[city2]).kilometers
 
     def get_random_genotype(self):
         """

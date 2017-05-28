@@ -1,6 +1,9 @@
 import numpy as np
 import random
 from copy import deepcopy
+import itertools
+
+CHECK_MIN = True
 
 class GeneticAlgorithm:
     def __init__(self, data):
@@ -9,6 +12,9 @@ class GeneticAlgorithm:
         self.n_population = None
         self.n_cross = None
         self.stop_iters = None
+        self.solution = None
+
+        random.seed()
 
     def init(self, population=100, cross=50, stop_iters=20):
         """
@@ -20,7 +26,17 @@ class GeneticAlgorithm:
 
         self.stop_iters = stop_iters
         self.n_population = population
-        self.population = [Genotype(data=self.data) for i in range(self.n_population)]
+
+        if not CHECK_MIN:
+            self.population = [Genotype(data=self.data) for i in range(self.n_population)]
+        else:
+            # TODO: REMOVE THIS, JUST FOR CHECKING
+            self.population = []
+            for perm in itertools.permutations(range(self.data.N)):
+                self.population.append(Genotype(data=self.data))
+                self.population[-1].genes = np.array(perm)
+            self.n_population = len(self.population)
+
         if cross % 2 != 0:
             raise Exception("cross=%s must be an even number!" % (cross))
         elif cross > population:
@@ -38,7 +54,8 @@ class GeneticAlgorithm:
         min_cost = -1
         while stop_i < self.stop_iters:
             # Generate the even population of individuals to be crossed
-            ind = [deepcopy(random.choice(self.population)) for i in range(self.n_cross)]
+            # ind = deepcopy([random.choice(self.population) for i in range(self.n_cross)])
+            ind = deepcopy(random.sample(self.population, self.n_cross))
 
             # Cross the individuals in pairs
             for i in range(0, self.n_cross, 2):
@@ -55,7 +72,11 @@ class GeneticAlgorithm:
             for idx, ind in enumerate(self.population):
                 temp[idx] = (idx, ind.cost())
 
+            # Sort by cost
             temp.sort(order='cost')
+            self.solution = deepcopy(self.population[temp['i'][0]])
+
+
             # Get indexes of individuals that should be removed from the population
             del_idxs = sorted(temp['i'][-self.n_cross:], reverse=True)
             for idx in del_idxs:
@@ -65,9 +86,11 @@ class GeneticAlgorithm:
             if temp['cost'][0] == min_cost:
                 stop_i += 1
             else:
+                stop_i = 0
                 min_cost = temp['cost'][0]
+                self.solution.display()
 
-            print("Population: %s, cost: %s" % (k, min_cost))
+            # print("Population: %s, cost: %s zł" % (k, min_cost))
             k += 1
 
     def print_results(self):
@@ -75,7 +98,10 @@ class GeneticAlgorithm:
         Prints the best solution
         """
 
-        pass  # TODO
+        print("Best solution: %.2f zł" % (self.solution.cost()))
+        print("Best path:")
+        for i, city_i in enumerate(self.solution.genes):
+            print("\t%s. %s (%s kg)" % (i+1, self.data.city_names[city_i], self.data.masses[city_i]))
 
 
 class Genotype:
@@ -136,7 +162,10 @@ class Genotype:
         """
 
         # Generate a random locus (the index of division for the genotypes)
-        locus = np.random.randint(1, self.data.N - 1)
+        if self.data.N > 2:
+            locus = np.random.randint(1, self.data.N - 1)
+        else:
+            locus = 1
 
         # Divide the genotypes into 2 pieces
         self1 = self.genes[:locus]
@@ -168,7 +197,10 @@ class Genotype:
         """
 
         # Swap two neighbour genes at a random location (locus)
-        locus = np.random.randint(1, self.data.N - 1)
+        if self.data.N > 2:
+            locus = np.random.randint(1, self.data.N - 1)
+        else:
+            locus = 0
         temp = self.genes[locus]
         self.genes[locus] = self.genes[locus + 1]
         self.genes[locus + 1] = temp
