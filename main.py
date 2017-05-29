@@ -1,9 +1,8 @@
 from Data import Data
-from GeneticAlgorithm import GeneticAlgorithm, Genotype
+from GeneticAlgorithm import GeneticAlgorithm
 
-data = Data()
+data = Data("task.csv")
 alg = GeneticAlgorithm(data)
-
-alg.init(population=400, cross=10, stop_iters=2000)
+alg.init(population=80, cross=30, stop_iters=30)
 alg.solve()
 alg.print_results()

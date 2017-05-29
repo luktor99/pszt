@@ -2,8 +2,10 @@ import numpy as np
 import random
 from copy import deepcopy
 import itertools
+import matplotlib.pyplot as plt
 
-CHECK_MIN = True
+CHECK_MIN = False
+# CHECK_MIN = True
 
 class GeneticAlgorithm:
     def __init__(self, data):
@@ -13,6 +15,8 @@ class GeneticAlgorithm:
         self.n_cross = None
         self.stop_iters = None
         self.solution = None
+        self.plt_x = []
+        self.plt_y = []
 
         random.seed()
 
@@ -49,6 +53,7 @@ class GeneticAlgorithm:
         Attempts to solve the problem
         """
 
+        # Prepare the cost vs population number (k) plot
         k = 0
         stop_i = 0
         min_cost = -1
@@ -76,7 +81,6 @@ class GeneticAlgorithm:
             temp.sort(order='cost')
             self.solution = deepcopy(self.population[temp['i'][0]])
 
-
             # Get indexes of individuals that should be removed from the population
             del_idxs = sorted(temp['i'][-self.n_cross:], reverse=True)
             for idx in del_idxs:
@@ -88,9 +92,12 @@ class GeneticAlgorithm:
             else:
                 stop_i = 0
                 min_cost = temp['cost'][0]
-                self.solution.display()
+                # self.solution.display()
 
-            # print("Population: %s, cost: %s zł" % (k, min_cost))
+            # Show population results
+            print("Population: %s, cost: %.2f zł" % (k, min_cost))
+            self.plt_x.append(k)
+            self.plt_y.append(min_cost)
             k += 1
 
     def print_results(self):
@@ -98,10 +105,18 @@ class GeneticAlgorithm:
         Prints the best solution
         """
 
-        print("Best solution: %.2f zł" % (self.solution.cost()))
+        print("---------------------------------------------")
         print("Best path:")
         for i, city_i in enumerate(self.solution.genes):
-            print("\t%s. %s (%s kg)" % (i+1, self.data.city_names[city_i], self.data.masses[city_i]))
+            print("\t%s. %s (load: %s kg)" % (i+1, self.data.city_names[city_i], self.data.masses[city_i]))
+        print("\nMinimal cost: %.2f zł" % (self.solution.cost()))
+
+        plt.plot(self.plt_x, self.plt_y, '-')
+        plt.title("Minimalny koszt w kolejnych populacjach")
+        plt.xlabel("Numer populacji")
+        plt.ylabel("Koszt minimalny [zł]")
+        plt.grid(True)
+        plt.show()
 
 
 class Genotype:
@@ -132,10 +147,11 @@ class Genotype:
 
         # Calculate the cost from the start city to the first on in the genotype
         cost = self.section_cost(self.data.city_dists[self.genes[0]], remaining_mass)
+        # cost = 0
 
         # Sum the costs on all sections
-        for i, gene in enumerate(self.genes[0:-1]):
-            remaining_mass -= self.data.masses[i]
+        for i, gene in enumerate(self.genes[:-1]):
+            remaining_mass -= self.data.masses[gene]
             dist = self.data.adjM[gene, self.genes[i + 1]]
             cost += self.section_cost(dist, remaining_mass)
 

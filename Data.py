@@ -3,7 +3,7 @@ import csv
 from geopy.distance import great_circle
 
 class Data:
-    def __init__(self):
+    def __init__(self, filename):
         # Load the cities database
         self.cities_db = {}
         with open('cities.csv', encoding='utf-8-sig') as csvcities:
@@ -15,7 +15,7 @@ class Data:
 
         # Load the task
         self.visited_cities = []
-        with open('task.csv', encoding='utf-8-sig') as csvtask:
+        with open(filename, encoding='utf-8-sig') as csvtask:
             cityreader = csv.reader(csvtask, delimiter=';', quotechar='\"')
             for visit in cityreader:
                 if self.start_city is None:
