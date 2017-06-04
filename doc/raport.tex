@@ -36,16 +36,48 @@ rozwiązania w funkcji numeru pokolenia.
 \section*{Podział pracy}
 Marcin Baran - Definicja zadania\\
 Łukasz Kilaszewski - Implementacja programu\\
-Mateusz Perciński - Raport oraz Wnioski
+Mateusz Perciński - Raport oraz wnioski
 
 \section{Definicja problemu}
-zestawienie kluczowych decyzji projektowych,
+Projekt polega na rozwiązaniu zmodyfikowanego zadania komiwojażera. Optymalizowana jest trasa (kolejność odwiedzonych miast) ciężarówki rozwożącej meble ze względu na zużycie paliwa. Na podstawie treści zadnia przyjęto, że dla każdego miasta na planowanej trasie, znana jest masa mebli, które mają być do niego dostarczone, a zużycie paliwa jest zależne masy przewożonego towaru. W kolejnych podpunktach opisano przyjęte założenia, które nie wynikają ściśle z treści zadania.
+
+\subsection{Miasta}
+Przyjęto, że zadanie rozwiązywane jest dla większych polskich miast, których lista wraz ze współrzędnymi geograficznymi została pobrana z %TODO 
+Odległość między miastami zdefiniowana jest miarą euklidesową, jako odległość w linii prostej. Założono, że użytkownik będzie mógł wybrać miasta, mające się znaleźć na trasie przejazdu, i każdemu z nich przypisać masę mebli, które mają być w nim zostawione.
+
+\subsection{Trasa}
+Założenia dotyczące trasy przejazdu ciężarówki:
+\begin{itemize}
+\item trasa zaczyna się i kończy tym samym, określonym na początku mieście,
+\item każde miasto jest odwiedzane tylko raz,
+\item odległości między miastami są jednakowe w obydwu kierunkach (problem komiwojażera jest symetryczny),
+\item ciężarówka zostawia w każdym mieście wszystkie, predestynowane do niego, meble. Jej masa zmniejsza się. Ostatni, powrotni odcinek, pokonywany jest bez ładunku.
+\end{itemize}
+
+\subsection{Zużycie paliwa}
+wprostporporcjonalne do masy, opisne wzorem.
+
+\subsection{Algorytm ewolucyjny}
+co jest genem,
+co jest populacją
+krzyżowanie,
+mutacja,
+
 
 \section{Implementacja}
+Python jest fajny. jakie bibliotego są wykorzystane
+\begin{itemize}
+\item \textbf{numpby} - po co?
+\item \textbf{geopy} - po co?
+\item \textbf{matplotlib} - po co?
+\end{itemize}
 
 \subsection{Struktura programu}
-opis struktury
-programu
+opis struktury programu
+
+main + podprogramy
+dane w csv
+
 \subsection{Instrukcja dla użytkownika}
 
 \section{Testy i osiągnięte rezultaty}
@@ -53,45 +85,9 @@ programu
 \section{Wnioski}
 wnioski dotyczące osiągniętych rezultatów. 
 
-Zaplanować trasę samochodu ciężarowego rozwożącego meble. Każdy mebel ma określoną
-wagę oraz miasto przeznaczenia. Zużycie paliwa przez samochód ciężarowy jest zależne od
-masy przewożonego ładunku. Zaplanować trasą rozwiezienia mebli która jest optymalna ze
-względu na zużycie paliwa. Program powinien na bieżąco prezentować jakość znalezionego
-rozwiązania w funkcji numeru pokolenia.
-Zaplanować trasę samochodu ciężarowego rozwożącego meble. Każdy mebel ma określoną
-wagę oraz miasto przeznaczenia. Zużycie paliwa przez samochód ciężarowy jest zależne od
-masy przewożonego ładunku. Zaplanować trasą rozwiezienia mebli która jest optymalna ze
-względu na zużycie paliwa. Program powinien na bieżąco prezentować jakość znalezionego
-rozwiązania w funkcji numeru pokolenia.
-Zaplanować trasę samochodu ciężarowego rozwożącego meble. Każdy mebel ma określoną
-wagę oraz miasto przeznaczenia. Zużycie paliwa przez samochód ciężarowy jest zależne od
-masy przewożonego ładunku. Zaplanować trasą rozwiezienia mebli która jest optymalna ze
-względu na zużycie paliwa. Program powinien na bieżąco prezentować jakość znalezionego
-rozwiązania w funkcji numeru pokolenia.
-Zaplanować trasę samochodu ciężarowego rozwożącego meble. Każdy mebel ma określoną
-wagę oraz miasto przeznaczenia. Zużycie paliwa przez samochód ciężarowy jest zależne od
-masy przewożonego ładunku. Zaplanować trasą rozwiezienia mebli która jest optymalna ze
-względu na zużycie paliwa. Program powinien na bieżąco prezentować jakość znalezionego
-rozwiązania w funkcji numeru pokolenia.
-Zaplanować trasę samochodu ciężarowego rozwożącego meble. Każdy mebel ma określoną
-wagę oraz miasto przeznaczenia. Zużycie paliwa przez samochód ciężarowy jest zależne od
-masy przewożonego ładunku. Zaplanować trasą rozwiezienia mebli która jest optymalna ze
-względu na zużycie paliwa. Program powinien na bieżąco prezentować jakość znalezionego
-rozwiązania w funkcji numeru pokolenia.
-Zaplanować trasę samochodu ciężarowego rozwożącego meble. Każdy mebel ma określoną
-wagę oraz miasto przeznaczenia. Zużycie paliwa przez samochód ciężarowy jest zależne od
-masy przewożonego ładunku. Zaplanować trasą rozwiezienia mebli która jest optymalna ze
-względu na zużycie paliwa. Program powinien na bieżąco prezentować jakość znalezionego
-rozwiązania w funkcji numeru pokolenia.
-Zaplanować trasę samochodu ciężarowego rozwożącego meble. Każdy mebel ma określoną
-wagę oraz miasto przeznaczenia. Zużycie paliwa przez samochód ciężarowy jest zależne od
-masy przewożonego ładunku. Zaplanować trasą rozwiezienia mebli która jest optymalna ze
-względu na zużycie paliwa. Program powinien na bieżąco prezentować jakość znalezionego
-rozwiązania w funkcji numeru pokolenia.
-Zaplanować trasę samochodu ciężarowego rozwożącego meble. Każdy mebel ma określoną
-wagę oraz miasto przeznaczenia. Zużycie paliwa przez samochód ciężarowy jest zależne od
-masy przewożonego ładunku. Zaplanować trasą rozwiezienia mebli która jest optymalna ze
-względu na zużycie paliwa. Program powinien na bieżąco prezentować jakość znalezionego
-rozwiązania w funkcji numeru pokolenia.
+wykres dla różnej wielkości populacji,
+jakiś teścik dla zadania niesymetrycznego : np. dojazd do do miasta z innego jest niemożliwy,
+
+lub całkiem zablokować przejazd między dwoma miastami.
 
 \end{document}
