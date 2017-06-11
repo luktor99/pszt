@@ -65,9 +65,8 @@
 
 \thispagestyle{empty}
 \tableofcontents
-\cleardoublepage
+%\cleardoublepage
 
-\chapter{Wprowadzenie}
 \section*{Treść zadania}
 \textbf{WG.AE1 Rozwożenie mebli} \\
 Zaplanować trasę samochodu ciężarowego rozwożącego meble. Każdy mebel ma określoną
@@ -80,14 +79,15 @@ Marcin Baran - Definicja zadania\\
 Łukasz Kilaszewski - Implementacja programu\\
 Mateusz Perciński - Raport oraz wnioski
 
-\section{Definicja problemu}
+
+\chapter{Definicja problemu}
 Projekt polega na rozwiązaniu zmodyfikowanego zadania komiwojażera. Optymalizowana jest trasa (kolejność odwiedzonych miast) ciężarówki rozwożącej meble ze względu na zużycie paliwa. Na podstawie treści zadnia przyjęto, że dla każdego miasta na planowanej trasie, znana jest masa mebli, które mają być do niego dostarczone, a zużycie paliwa jest zależne masy przewożonego towaru. W kolejnych podpunktach opisano przyjęte założenia, które nie wynikają ściśle z treści zadania.
 
-\subsection{Miasta}
+\section{Miasta}
 Przyjęto, że zadanie rozwiązywane jest dla większych polskich miast, których lista wraz ze współrzędnymi geograficznymi została pobrana z %TODO 
 Odległość między miastami zdefiniowana jest miarą euklidesową, jako odległość w linii prostej. Założono, że użytkownik będzie mógł wybrać miasta, mające się znaleźć na trasie przejazdu, i każdemu z nich przypisać masę mebli, które mają być w nim zostawione.
 
-\subsection{Trasa}
+\section{Trasa}
 Założenia dotyczące trasy przejazdu ciężarówki:
 \begin{itemize}
 \item trasa zaczyna się i kończy tym samym, określonym na początku mieście,
@@ -96,7 +96,7 @@ Założenia dotyczące trasy przejazdu ciężarówki:
 \item ciężarówka zostawia w każdym mieście wszystkie, predestynowane do niego, meble. Jej masa zmniejsza się. Ostatni, powrotni odcinek, pokonywany jest bez ładunku.
 \end{itemize}
 
-\subsection{Zużycie paliwa}
+\section{Zużycie paliwa}
 Przyjęto, że zużycie paliwa jest wprostproporcjonalne do masy pojazdu, a w związku z tym z masą przewożonych mebli. Koszt przejazdu pomiędzy dwoma miastami, czyli zużycie paliwa na trasie między nimi, określono wzorem
 \begin{equation}
 cost_{section} = m_a * mass + m_b) \cdot dist,
@@ -109,30 +109,43 @@ gdzie:
 \item[$m_a$] - współczynnik wpływu dodatkowego obciążenia na spalanie ciężarówki $[\frac{litr}{kg \cdot km}]$
 \end{description}
 
-\subsection{Algorytm ewolucyjny}
-co jest genem,
-co jest populacją
+\section{Algorytm ewolucyjny}
+Do rozwiązania problemu zastosowano algorytm ewolucyjny ($\mu$ + $\lambda$). Przyjęto, że osobnikiem jest wytyczona trasa, a jego genotypem wektor liczb całkowitych określający kolejność odwiedzanych miast. Numeracja odwiedzanych miast jest zgodna z kolejnością na liście definiującej problem (wypisującej wszystkie miasta, które mają zostać odwiedzone wraz z masami predestynowanych do nich mebli). Miasto początkowe (i jednocześnie końcowe) nie występuje w wektorze. Założono, że populacją dla algorytmu ewolucyjnego jest zbiór takich wektorów.
+
+\subsection{Krzyżowanie}
 krzyżowanie,
+\subsection{Mutacja}
 mutacja,
 
-
-\section{Implementacja}
-Python jest fajny. jakie bibliotego są wykorzystane
+\chapter{Implementacja}
+Program rozwiązujący zdefiniowany wcześniej problem komiwojażera zaimplementowano w języku Python. Wykorzystano następujące biblioteki:
 \begin{itemize}
-\item \textbf{numpy} - po co?
-\item \textbf{geopy} - po co?
-\item \textbf{matplotlib} - po co?
+\item \textbf{numpy} - umożliwiła korzystanie z macierzy,
+\item \textbf{geopy} - wykorzystano funkcję great\_circle w celu obliczania odległości miedzy dwoma miastami znając ich współrzędne geograficzne,
+\item \textbf{matplotlib} - posłużyła do generowania czytelnych wykresów.
 \end{itemize}
 
-\subsection{Struktura programu}
-opis struktury programu
+\section{Struktura programu}
+Napisany program ma strukturę modułową. Głównym celem było wyodrębnienie części odpowiedzialnej za realizację obliczeń według algorytmu ewolucyjnego od części definiującej problem do rozwiązania.
 
-main + podprogramy
-dane w csv
+\section{Instrukcja dla użytkownika}
+Plik \textit{cities.csv} zawiera większe miasta wraz z ich współrzędnymi geograficznymi. Spośród nich należy wybierać te, które mają być odwiedzone przez ciężarówkę. Definiowanie problemu do rozwiązania polega na uzupełnianiu pliku \textit{task.csv}. W pierwszym wierszu znajduje się nazwa miasta startowego (i jednocześnie końcowego). Następne wiersze zawierają nazwy miast, które mają zostać odwiedzone wraz z masą mebli, które mają być do nich dostarczone. Wiersz ma format $nazwa\_miasta;masa\_mebli$. Masa mebli powinna być podana jako liczba, z przynajmniej jednym miejsce dziesiętnym np. 100.0, 123.4.
 
-\subsection{Instrukcja dla użytkownika}
+Parametry algorytmu ewolucyjnego można zdefiniować jako zmieniając wartości argumentów funkcji \textbf{init} obiektu \textbf{alg}:
+\begin{itemize}
+\item population - ilość osobników wybieranych do populacji w każdej iteracji algorytmu,
+\item cross - ilość osobników, które mają być krzyżowane w każdym kroku iteracji algorytmu,
+\item stop\_iters - ilość iteracji, po której, w przypadku braku poprawy wyniku, działanie algorytmu jest przerywane.
+\end{itemize}
 
-\section{Testy i osiągnięte rezultaty}
+Po zdefiniowaniu problemu do rozwiązania oraz parametrów algorytmu, należy uruchomić plik \textit{main.py}. W oknie konsoli, będą wypisywane genotypy najlepszych osobników z populacji danej iteracji wraz z obliczoną dla nich wartością funkcji oceny, którą jest określona jako zużycie paliwa. %TODO to miało być chyba wyświetlane na bieżąco a nie jest?
+ Po zakończeniu działania algorytmu najlepsze wartości dla najlepszych osobników każdej iteracji prezentowane się w formie wykresu.
+
+\chapter{Testy i osiągnięte rezultaty}
+
+\section{Test1}
+
+\section{Czas obliczeń}
 
 \section{Wnioski}
 wnioski dotyczące osiągniętych rezultatów. 
