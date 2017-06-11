@@ -113,9 +113,9 @@ gdzie:
 Do rozwiązania problemu zastosowano algorytm ewolucyjny ($\mu$ + $\lambda$). Przyjęto, że osobnikiem jest wytyczona trasa, a jego genotypem wektor liczb całkowitych określający kolejność odwiedzanych miast. Numeracja odwiedzanych miast jest zgodna z kolejnością na liście definiującej problem (wypisującej wszystkie miasta, które mają zostać odwiedzone wraz z masami predestynowanych do nich mebli). Miasto początkowe (i jednocześnie końcowe) nie występuje w wektorze. Założono, że populacją dla algorytmu ewolucyjnego jest zbiór takich wektorów.
 
 \subsection{Krzyżowanie}
-krzyżowanie,
+krzyżowanie, %TODO
 \subsection{Mutacja}
-mutacja,
+mutacja, %TODO
 
 \chapter{Implementacja}
 Program rozwiązujący zdefiniowany wcześniej problem komiwojażera zaimplementowano w języku Python. Wykorzystano następujące biblioteki:
@@ -127,6 +127,7 @@ Program rozwiązujący zdefiniowany wcześniej problem komiwojażera zaimplement
 
 \section{Struktura programu}
 Napisany program ma strukturę modułową. Głównym celem było wyodrębnienie części odpowiedzialnej za realizację obliczeń według algorytmu ewolucyjnego od części definiującej problem do rozwiązania.
+%TODO
 
 \section{Instrukcja dla użytkownika}
 Plik \textit{cities.csv} zawiera większe miasta wraz z ich współrzędnymi geograficznymi. Spośród nich należy wybierać te, które mają być odwiedzone przez ciężarówkę. Definiowanie problemu do rozwiązania polega na uzupełnianiu pliku \textit{task.csv}. W pierwszym wierszu znajduje się nazwa miasta startowego (i jednocześnie końcowego). Następne wiersze zawierają nazwy miast, które mają zostać odwiedzone wraz z masą mebli, które mają być do nich dostarczone. Wiersz ma format $nazwa\_miasta;masa\_mebli$. Masa mebli powinna być podana jako liczba, z przynajmniej jednym miejsce dziesiętnym np. 100.0, 123.4.
@@ -143,10 +144,85 @@ Po zdefiniowaniu problemu do rozwiązania oraz parametrów algorytmu, należy ur
 
 \chapter{Testy i osiągnięte rezultaty}
 
-\section{Test1}
+\section{Różne rozwiązania tego samego problemu}
+Pierwszym testem była próba rozwiązania tego samego problemu kilkukrotnie oraz porównanie wyników. Jako miasto startowe została wybrana Bydgoszcz. Kolejne miasta, które miały znaleźć się na trasie wraz z ciężarem mebli przedstawiono w tabeli \ref{tab:same-problem-same-algorithm}.
+
+\begin{table}[ht!]
+\caption{Definicja problemu do rozwiązania w pierwszym teście}
+\label{tab:same-problem-same-algorithm}
+\centering
+\scalebox{0.9}{
+\begin{tabular}{cc}
+\hline 
+Miasto & Masa mebli [kg]\\
+\hline
+Gdańsk & 400.0 \\
+Katowice & 800.0 \\
+Tarnów & 200.0 \\
+Łódź & 100.0 \\
+Szczecin & 111.0 \\
+Warszawa & 100.0 \\ 
+Opole & 1.0 \\
+Siedlce & 300.0 \\
+Kraków & 700.0 \\
+Gliwice & 100.0 \\
+Poznań & 50.0 \\
+Kielce & 20.0 \\
+Olsztyn & 300.0 \\
+Suwałki & 100.0 \\
+Gdynia & 150.0 \\
+\hline
+\end{tabular}}
+\end{table}
+
+Algorytm uruchomiono trzykrotnie, ustalając liczność populacji w każdym kroku algorytmu na 80 osobników, ilość krzyżowanych osobników - na 30, a warunek stopu, w przypadku braku poprawy rezultatu - na 30 iteracji. Parametry $m_a$ oraz $m_b$ określono w taki sposób, że pusta ciężarówka spala średnio 10 litrów na 100 km, a każde dodatkowe 100 kg bagażu, większa spalanie o 1l. Przyjęto cenę paliwa na poziomie 5 złotych za litr. Zgodnie oczekiwaniami, algorytm, ze względu na elementy losowości, w kolejnych iteracjach uzyskiwał różne wartości najmniejszego kosztu przejazdu. Ostateczne wyniki działania algorytmu również były różne. Rozwiązania problemu zostały przedstawione w tabeli \ref{tab:results-same-algorithm}. Jak widać zaproponowana kolejność odwiedzanych miast już różna. Najlepszy rozwiązanie, czyli koszt rozwożenia mebli wynoszący 2585.71 zł, zostało znalezione przy pierwszym uruchomieniu algorytmu. Najlepsze rozwiązania dla kolejnych iteracji algorytmu przedstawiono na rysunku \ref{fig:same-problem-same-algorithm}.
+
+\begin{table}[ht!]
+\caption{Rozwiązania pierwszego test}
+\label{tab:results-same-algorithm}
+\centering
+\begin{tabular}{llll}
+\hline 
+Kolejność na trasie & \multicolumn{3}{c}{Numer uruchomienia algorytmu}\\
+\hline
+						& 1 & 2 & 3\\
+\hline
+1 						& Gdańsk	& Tarnów	& Gdańsk\\
+2						& Gdynia	& Kraków	& Olsztyn\\
+3						& Olsztyn	& Katowice	& Kielce\\
+4						& Suwałki	& Gliwice	& Tarnów\\
+5						& Siedlce	& Warszawa	& Kraków\\
+6						& Warszawa	& Siedlce	& Katowice\\
+7						& Łódź		& Suwałki	& Gliwice\\
+8						& Gliwice	& Olsztyn	& Opole\\
+9						& Katowice	& Gdańsk	& Łódź\\
+10						& Kraków	& Gdynia	& Warszawa\\
+11						& Tarnów	& Łódź		& Siedlce\\
+12						& Kielce	& Kielce	& Suwałki\\
+13						& Opole		& Opole		& Gdynia\\
+14						& Poznań	& Poznań	& Szczecin\\
+15						& Szczecin	& Szczecin	& Poznań\\
+\hline
+Koszt przejazdu [zł]	& 2585.71	& 2967.03 	& 2706.77\\
+\hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.7\textwidth]{graphics/same-problem-same-algorithm}
+\caption{Wykres wartości najlepszego rozwiązania w kolejnych iteracjach dla 3 uruchomień tego samego algorytmu. Pierwsze uruchomienie algorytmu - kolor czerwony, drugie - niebieski, trzecie - zielony}
+\label{fig:same-problem-same-algorithm}
+\end{figure}
+
+\section{Różne wielkości populacji}
+%TODO
 
 \section{Czas obliczeń}
-
+ %TODO
+ 
 \section{Wnioski}
 wnioski dotyczące osiągniętych rezultatów. 
 
