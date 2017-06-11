@@ -45,8 +45,8 @@ class Data:
         self.masses = np.array([self.visited_cities[i][1] for i in range(self.N)])
 
         # Mass transportation cost parameters (cost(mass, distance) = (m_a*mass + m_b) * distance)
-        self.m_a = 0.001
-        self.m_b = 0.0001
+        self.m_a = 0.01/100.0*5.0 # 0.01 l/kg / 100 km * 5 zl/l
+        self.m_b = 10.0/100.0*5.0 # 10.0 l / 100 km * 5 zl/l
 
         # Calculate the sum of distributed masses
         self.masses_sum = np.sum(self.masses)
