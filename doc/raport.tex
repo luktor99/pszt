@@ -58,7 +58,7 @@
 	\vspace{120pt}
 	\Large{Marcin Baran \textit{259804}}\\
 	\Large{Łukasz Kilaszewski \textit{259822}}\\
-	\Large{Mateusz Perciński \textit{259827}}\\
+	\Large{Mateusz Perciński \textit{Z59827}}\\
 	\vfill
 	\large{13 czerwca 2017}
 \end{titlepage}
@@ -97,7 +97,17 @@ Założenia dotyczące trasy przejazdu ciężarówki:
 \end{itemize}
 
 \subsection{Zużycie paliwa}
-wprostporporcjonalne do masy, opisne wzorem.
+Przyjęto, że zużycie paliwa jest wprostproporcjonalne do masy pojazdu, a w związku z tym z masą przewożonych mebli. Koszt przejazdu pomiędzy dwoma miastami, czyli zużycie paliwa na trasie między nimi, określono wzorem
+\begin{equation}
+cost_{section} = m_a * mass + m_b) \cdot dist,
+\end{equation}
+gdzie: 
+\begin{description}
+\item[$mass$] - masa mebli znajdujących się w ciężarówce na tym odcinku drogi,
+\item[$dist$] - odległość między miastami,
+\item[$m_b$] - współczynnik określający stałe spalanie ciężarówki (bez obiciążenia) $[\frac{litr}{km}]$
+\item[$m_a$] - współczynnik wpływu dodatkowego obciążenia na spalanie ciężarówki $[\frac{litr}{kg \cdot km}]$
+\end{description}
 
 \subsection{Algorytm ewolucyjny}
 co jest genem,
