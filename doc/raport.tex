@@ -113,7 +113,14 @@ gdzie:
 Do rozwiązania problemu zastosowano algorytm ewolucyjny ($\mu$ + $\lambda$). Przyjęto, że osobnikiem jest wytyczona trasa, a jego genotypem wektor liczb całkowitych określający kolejność odwiedzanych miast. Numeracja odwiedzanych miast jest zgodna z kolejnością na liście definiującej problem (wypisującej wszystkie miasta, które mają zostać odwiedzone wraz z masami predestynowanych do nich mebli). Miasto początkowe (i jednocześnie końcowe) nie występuje w wektorze. Założono, że populacją dla algorytmu ewolucyjnego jest zbiór takich wektorów.
 
 \subsection{Krzyżowanie}
-krzyżowanie, %TODO
+Genotypy 2 osobników krzyżowane w następujący sposób:
+\begin{itemize}
+\item Losowany jest liczna będąca indeksem w wektorze kolejności miast podczas przejazdu.
+\item Część wektorów znajdująca się za wylosowanym indeksem jest zamieniana między osobnikami.
+\item Wybierane są geny (wartości w wektorze), które zostały odrzucone w skutek powyższych operacji oraz takie, które w się powtarzają.
+\item Geny powtarzające się w ramach jednego genotypu, zostają zastąpione przez brakujące (w stosunku do pierwotnego genotypu).
+\end{itemize}
+
 \subsection{Mutacja}
 mutacja, %TODO
 
@@ -139,7 +146,7 @@ Parametry algorytmu ewolucyjnego można zdefiniować jako zmieniając wartości 
 \item stop\_iters - ilość iteracji, po której, w przypadku braku poprawy wyniku, działanie algorytmu jest przerywane.
 \end{itemize}
 
-Po zdefiniowaniu problemu do rozwiązania oraz parametrów algorytmu, należy uruchomić plik \textit{main.py}. W oknie konsoli, będą wypisywane genotypy najlepszych osobników z populacji danej iteracji wraz z obliczoną dla nich wartością funkcji oceny, którą jest określona jako zużycie paliwa. %TODO to miało być chyba wyświetlane na bieżąco a nie jest?
+Po zdefiniowaniu problemu do rozwiązania oraz parametrów algorytmu, należy uruchomić plik \textit{main.py}. W oknie konsoli, będą wypisywane genotypy najlepszych osobników z populacji danej iteracji wraz z obliczoną dla nich wartością funkcji oceny, którą jest określona jako zużycie paliwa. %TODO to miało być chyba wyświetlane na bieżąco, a nie jest?
  Po zakończeniu działania algorytmu najlepsze wartości dla najlepszych osobników każdej iteracji prezentowane się w formie wykresu.
 
 \chapter{Testy i osiągnięte rezultaty}
