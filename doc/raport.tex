@@ -135,19 +135,35 @@ Program rozwiązujący zdefiniowany wcześniej problem komiwojażera zaimplement
 \section{Struktura programu}
 Napisany program ma strukturę modułową. Głównym celem było wyodrębnienie części odpowiedzialnej za realizację obliczeń według algorytmu ewolucyjnego od części definiującej problem do rozwiązania.
 
-\subsection{Klasa GenethicAlgorithm}
-%TODO
-\subsection{Klasa Genotype}
-%TODO
 \subsection{Klasa Data}
-%TODO
-\subsection{Pliki CSV}
-%TODO
+Klasa Data zawiera wszystkie informację na temat zadania, które ma być rozwiązywane. Argumentem jej konstruktora jest nazwa pliku CSV definiującego zadanie. Po wywołaniu konstruktora miasta są numerowane oraz zapisywane w tablicy wraz z ciężarami mebli. Określane są parametry $m_a$ i $m_b$. Budowana jest również tablica przechowująca odległości między dwoma dowolnymi miastami z zadania. Klasa posiada funkcje \textbf{distance} obliczająca odległość między dwoma miastami na podstawie ich współrzędnych geograficznych, oraz funkcję \textbf{get\_random\_genotype} zwracającą permutację wektora liczb, odpowiadających miastom.
+\subsection{Pliki CSV}\label{sec:csv}
+Plik \textit{cities.csv} zawiera większe miasta wraz z ich współrzędnymi geograficznymi. Spośród nich należy wybierać te, które mają być odwiedzone przez ciężarówkę. Definiowanie problemu do rozwiązania polega na uzupełnianiu pliku \textit{task.csv}.
+
+\subsection{Klasa Genotype}
+Klasa Genotype reprezentuje genotyp osobnika algorytmu ewolucyjnego oraz operacje z nim związane. Konstruktor przyjmuje obiekt typu Data i zapisuje go. Klasa zawiera następujące funkcje:
+\begin{itemize}
+\item \textbf{display} - wyświetla genotyp oraz wartość obliczonej dla niego funkcji celu,
+\item \textbf{cost} - oblicza wartość funkcji celu (w naszym przypadku koszt przejazdu ciężarówki), korzystając z funkcji \textbf{section\_cost},
+\item \textbf{section\_cost} - oblicza oblicza koszt przejazdu pomiędzy dwoma miastami,
+\item \textbf{cross} - krzyżuje dwa genotypy,
+\item \textbf{mutate} - przeprowadza mutację genotypu.
+\end{itemize}
+\subsection{Klasa GenethicAlgorithm}
+Klasa GenethicAlgorithm reprezentuje algorytm ewolucyjny. Jego konstruktor przyjmuje i zapisuje argument typu Data oraz definiuje pozostałe zmienne obiektu. Klasa zawiera następujące funkcje:
+\begin{itemize}
+\item \textbf{init} - przyjmuje argumenty \textbf{population}, \textbf{cross} i \textbf{stop\_iters}, a następnie sprawdza ich poprawność,
+\item \textbf{solve} - iteracyjnie rozwiązuje  zadanie wykorzystując reguły algorytmu ewolucyjnego, w każdym kroku drukując najlepszy uzyskany wynik,
+\item \textbf{print\_results} - wyświetla rezultaty działania algorytmu w postaci listy miast, w kolejności, jakie należy je odwiedzić oraz kosztu przejazdu.
+\item \textbf{cross} - krzyżuje dwa genotypy,
+\item \textbf{mutate} - przeprowadza mutację genotypu.
+\end{itemize}
+
 \subsection{Program main}
-%TODO
+Program main w najprostszej wersji tworzy obiekt typu Data, jako argument podając, nazwę pliku CSV z definicją zadania. następnie tworzy obiekt typu GeneticAlgorithm, podając mu obiekt typu Data. Kolejne polecenia to wywołania funkcji obiektu typu GeneticAlgorithm: \textbf{init} definiującej paramtery algorytmu, \textbf{solve} rozwiązującej zadanie, oraz \textbf{print\_result} drukującej wyniki.
 
 \section{Instrukcja dla użytkownika}
-Plik \textit{cities.csv} zawiera większe miasta wraz z ich współrzędnymi geograficznymi. Spośród nich należy wybierać te, które mają być odwiedzone przez ciężarówkę. Definiowanie problemu do rozwiązania polega na uzupełnianiu pliku \textit{task.csv}. W pierwszym wierszu znajduje się nazwa miasta startowego (i jednocześnie końcowego). Następne wiersze zawierają nazwy miast, które mają zostać odwiedzone wraz z masą mebli, które mają być do nich dostarczone. Wiersz ma format $nazwa\_miasta;masa\_mebli$. Masa mebli powinna być podana jako liczba, z przynajmniej jednym miejsce dziesiętnym np. 100.0, 123.4.
+Tak jak napisano w sekcji \ref{sec:csv}, plik \textit{cities.csv} zawiera większe miasta wraz z ich współrzędnymi geograficznymi. Spośród nich należy wybierać te, które mają być odwiedzone przez ciężarówkę. Definiowanie problemu do rozwiązania polega na uzupełnianiu pliku \textit{task.csv}. W pierwszym wierszu znajduje się nazwa miasta startowego (i jednocześnie końcowego). Następne wiersze zawierają nazwy miast, które mają zostać odwiedzone wraz z masą mebli, które mają być do nich dostarczone. Wiersz ma format $nazwa\_miasta;masa\_mebli$. Masa mebli powinna być podana jako liczba, z przynajmniej jednym miejsce dziesiętnym np. 100.0, 123.4.
 
 Parametry algorytmu ewolucyjnego można zdefiniować jako zmieniając wartości argumentów funkcji \textbf{init} obiektu \textbf{alg}:
 \begin{itemize}
@@ -156,7 +172,7 @@ Parametry algorytmu ewolucyjnego można zdefiniować jako zmieniając wartości 
 \item stop\_iters - ilość iteracji, po której, w przypadku braku poprawy wyniku, działanie algorytmu jest przerywane.
 \end{itemize}
 
-Po zdefiniowaniu problemu do rozwiązania oraz parametrów algorytmu, należy uruchomić plik \textit{main.py}. W oknie konsoli, będą wypisywane genotypy najlepszych osobników z populacji danej iteracji wraz z obliczoną dla nich wartością funkcji oceny, którą jest określona jako zużycie paliwa. %TODO to miało być chyba wyświetlane na bieżąco, a nie jest?
+Po zdefiniowaniu problemu do rozwiązania oraz parametrów algorytmu, należy uruchomić plik \textit{main.py}. W oknie konsoli, będą wypisywane genotypy najlepszych osobników z populacji danej iteracji wraz z obliczoną dla nich wartością funkcji oceny, którą jest określona jako zużycie paliwa.
  Po zakończeniu działania algorytmu najlepsze wartości dla najlepszych osobników każdej iteracji prezentowane się w formie wykresu.
 
 \chapter{Testy i osiągnięte rezultaty}
