@@ -9,17 +9,17 @@ data = Data("task.csv")
 #alg.print_results()
 
 alg1 = GeneticAlgorithm(data)
-alg1.init(population=80, cross=30, stop_iters=30)
+alg1.init(population=20, cross=10, stop_iters=30)
 alg1.solve()
 alg1.print_results()
 
 alg2 = GeneticAlgorithm(data)
-alg2.init(population=80, cross=30, stop_iters=30)
+alg2.init(population=80, cross=40, stop_iters=30)
 alg2.solve()
 alg2.print_results()
 
 alg3 = GeneticAlgorithm(data)
-alg3.init(population=80, cross=30, stop_iters=30)
+alg3.init(population=160, cross=80, stop_iters=30)
 alg3.solve()
 alg3.print_results()
 
