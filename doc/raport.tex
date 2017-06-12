@@ -235,17 +235,55 @@ Koszt przejazdu [zł]	& 2585.71	& 2967.03 	& 2706.77\\
 \end{figure}
 
 \section{Różne wielkości populacji}
-%TODO
+W drugim teście rozwiązywano problem zdefiniowany tak, jak w teście pierwszym, zmieniano wielkość populacji w kolejnych uruchomianiach algorytmu. Przyjęto, że koniec algorytm będzie występował po 30 iteracjach bez poprawy, a ilość krzyżowanych osobników zawsze będzie stanowiła połowę populacji. Tabela \ref{tab:results-diff-population} przedstawia wyniki działania algorytmu dla 3 różnych zestawów parametrów.
+
+\begin{table}[ht!]
+\caption{Rozwiązania drugiego testu}
+\label{tab:results-diff-population}
+\centering
+\begin{tabular}{llll}
+\hline 
+Kolejność na trasie & \multicolumn{3}{c}{Numer uruchomienia algorytmu}\\
+\hline
+						& 1 & 2 & 3\\
+\hline
+1 						& Katowice	& Gdańsk	& Gliwice\\
+2						& Kraków	& Gdynia	& Opole\\
+3						& Tarnów	& Olsztyn	& Katowice\\
+4						& Siedlce	& Suwałki	& Kraków\\
+5						& Olsztyn	& Siedlce	& Tarnów\\
+6						& Gdańsk	& Warszawa	& Kielce\\
+7						& Warszawa	& Kielce	& Łódź\\
+8						& Kielce	& Tarnów	& Warszawa\\
+9						& Łódź		& Kraków		& Siedlce\\
+10						& Gdynia	& Katowice	& Suwałki\\
+11						& Szczecin	& Gliwice		& Olsztyn\\
+12						& Poznań	& Opole	& Gdańsk\\
+13						& Opole		& Łódź		& Gdynia\\
+14						& Gliwice	& Poznań	& Szczecin\\
+15						& Suwałki	& Szczecin	& Poznań\\
+\hline
+Koszt przejazdu [zł]	& 3361.47	& 2538.42 	& 2673.21\\
+\hline
+Wielkość populacji		& 20		& 80 	& 160\\
+\hline
+Ilość krzyżowanych		& 10		& 40 	& 80\\
+\hline
+
+\end{tabular}
+\end{table}
+
+Wykres \ref{tab:results-diff-population} przedstawia działanie algorytmu dla podanych zestawów parametrów podanych w tabeli \ref{tab:results-diff-population}. Biorąc pod uwagę najlepsze rezultaty osiągane przez algorytmy, nie da się wyciągnąć jednoznacznego wniosku na temat jakość uzyskiwanego wyniku od wielkości populacji. Wybrane wielkości populacji były jednak bardzo małe w porównaniu ze wszystkimi możliwościami przejazdu ciężarówki (liczba rzędu $10^{12}$).
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.7\textwidth]{graphics/diff-population}
+\caption{Wykres wartości najlepszego rozwiązania w kolejnych iteracjach dla 3 uruchomień tego samego algorytmu. Pierwsze uruchomienie algorytmu - kolor czerwony, drugie - niebieski, trzecie - zielony}
+\label{fig:diff-population}
+\end{figure}
 
 \section{Czas obliczeń}
  %TODO
  
-\section{Wnioski}
-wnioski dotyczące osiągniętych rezultatów. 
-
-wykres dla różnej wielkości populacji,
-jakiś teścik dla zadania niesymetrycznego : np. dojazd do do miasta z innego jest niemożliwy,
-
-lub całkiem zablokować przejazd między dwoma miastami.
 
 \end{document}
