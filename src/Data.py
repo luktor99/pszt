@@ -67,3 +67,35 @@ class Data:
         :return: random genotype
         """
         return np.random.permutation(self.N)
+
+    def disconnectCities(self, city1, city2):
+        i = None
+        j = None
+        if self.start_city == city1:
+            try:
+                j = self.city_names.index(city2)
+            except(ValueError):
+                print("Podane miasto '%s' nie istnieje!" % city2)
+                return
+            self.city_dists[j] = float("inf")
+        elif self.start_city == city2:
+            try:
+                i = self.city_names.index(city1)
+            except(ValueError):
+                print("Podane miasto '%s' nie istnieje!" % city1)
+                return
+            self.city_dists[i] = float("inf")
+        else:
+            try:
+                i = self.city_names.index(city1)
+            except(ValueError):
+                print("Podane miasto '%s' nie istnieje!" % city1)
+                return
+            try:
+                j = self.city_names.index(city2)
+            except(ValueError):
+                print("Podane miasto '%s' nie istnieje!" % city2)
+                return
+
+        self.adjM[i, j] = float("inf")
+        self.adjM[j, i] = float("inf")

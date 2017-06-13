@@ -3,13 +3,14 @@ from GeneticAlgorithm import GeneticAlgorithm
 import matplotlib.pyplot as plt
 
 data = Data("task.csv")
+
 #alg = GeneticAlgorithm(data)
 #alg.init(population=80, cross=30, stop_iters=30)
 #alg.solve()
 #alg.print_results()
 
 alg1 = GeneticAlgorithm(data)
-alg1.init(population=20, cross=10, stop_iters=30)
+alg1.init(population=2000, cross=10, stop_iters=30)
 alg1.solve()
 alg1.print_results()
 
