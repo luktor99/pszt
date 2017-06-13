@@ -314,7 +314,59 @@ Wykres \ref{tab:results-diff-population} przedstawia działanie algorytmu dla po
 \label{fig:diff-population}
 \end{figure}
 
+<<<<<<< HEAD
+\section{Zablokowane połączenie między miastami}
+Na potrzeby dalszych testów zaimplementowano w klasie Data funkcje \textbf{disconnect}, która definiuje dwa miasta między, którymi bezpośrednie połączenie jest zablokowane - ich indeksy nie mogą wystąpić w genotypie obok siebie oraz dodano pomiar czasu działania algorytmu.
+
+Dla problemu zdefiniowanego tak, jak w poprzednich testach, uruchomiono algorytm trzykrotnie: bez blokowania połączeń bezpośrednich, blokując 2 połączenia (Katowice - Kraków oraz Siedlce - Suwałki) oraz blokując 4 połączenia (2 poprzednie oraz Poznań - Szczecin i Katowice - Gliwice). Rozwiązania przedstawiono w tabeli \ref{tab:results-disconnect} oraz na rysunku \ref{fig:disconnect}.
+\begin{table}[ht!]
+\caption{Rozwiązania trzeciego testu}
+\label{tab:results-disconnect}
+\centering
+\begin{tabular}{llll}
+\hline 
+Kolejność na trasie & \multicolumn{3}{c}{Numer uruchomienia algorytmu}\\
+\hline
+						& 1 & 2 & 3\\
+\hline
+1 						& Gdańsk	& Katowice	& Katowice\\
+2						& Gdynia	& Gliwice	& Tarnów\\
+3						& Gliwice	& Kraków	& Kraków\\
+4						& Katowice	& Tarnów	& Kielce\\
+5						& Kraków	& Kielce	& Siedlce\\
+6						& Tarnów	& Siedlce	& Olsztyn\\
+7						& Kielce	& Warszawa	& Gdańsk\\
+8						& Warszawa	& Olsztyn	& Gdynia\\
+9						& Siedlce	& Gdańsk	& Szczecin\\
+10						& Suwałki	& Gdynia	& Suwałki\\
+11						& Olsztyn	& Szczecin	& Warszawa\\
+12						& Łódź		& Poznań	& Łódź\\
+13						& Opole		& Opole		& Gliwice\\
+14						& Poznań	& Łódź		& Opole\\
+15						& Szczecin	& Suwałki	& Poznań\\
+\hline
+Koszt przejazdu [zł]	& 2750.86	& 2750.90 	& 3082.39\\
+\hline
+Wielkość populacji		& 100		& 100 	& 100\\
+\hline
+Ilość krzyżowanych		& 50		& 50 	& 50\\
+\hline
+Czas obliczeń [s]		& 8.78		& 8.73 	& 13.86\\
+\hline
+
+\end{tabular}
+\end{table}
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.6\textwidth]{graphics/disconnect}
+\caption{Wykres wartości najlepszego rozwiązania w kolejnych iteracjach dla 3 uruchomień tego samego algorytmu. Pierwsze uruchomienie algorytmu - kolor czerwony, drugie - niebieski, trzecie - zielony}
+\label{fig:disconnect}
+\end{figure}
+
+\section{Czas obliczeń dla większych populacji}
+=======
 %\section{Czas obliczeń}
+>>>>>>> 9c17e943f7a030eb9c7dc39db6c3bf25c51f9504
  %TODO
  
 
