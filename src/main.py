@@ -3,6 +3,7 @@ from GeneticAlgorithm import GeneticAlgorithm
 import matplotlib.pyplot as plt
 
 data = Data("task.csv")
+# data.disconnectCities("Bydgoszcz", "Gdynia")
 
 #alg = GeneticAlgorithm(data)
 #alg.init(population=80, cross=30, stop_iters=30)

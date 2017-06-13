@@ -3,6 +3,7 @@ import random
 from copy import deepcopy
 import itertools
 import matplotlib.pyplot as plt
+from timeit import default_timer as timer
 
 CHECK_MIN = False
 # CHECK_MIN = True
@@ -53,7 +54,9 @@ class GeneticAlgorithm:
         Attempts to solve the problem
         """
 
-        # Prepare the cost vs population number (k) plot
+        timer_start = timer()
+        timer_k = timer_start
+
         k = 0
         stop_i = 0
         min_cost = -1
@@ -95,10 +98,13 @@ class GeneticAlgorithm:
                 # self.solution.display()
 
             # Show population results
-            print("Population: %s, cost: %.2f zł" % (k, min_cost))
+            timer_delta = timer() - timer_k
+            timer_k = timer()
+            print("(%.2fs, +%.2fs) Population: %s, cost: %.2f zł" % (timer_k-timer_start, timer_delta, k, min_cost))
             self.plt_x.append(k)
             self.plt_y.append(min_cost)
             k += 1
+        print("Total time elapsed: %.2fs" % (timer()-timer_start))
 
     def print_results(self):
         """

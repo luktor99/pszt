@@ -97,5 +97,5 @@ class Data:
                 print("Podane miasto '%s' nie istnieje!" % city2)
                 return
 
-        self.adjM[i, j] = float("inf")
-        self.adjM[j, i] = float("inf")
+            self.adjM[i, j] = float("inf")
+            self.adjM[j, i] = float("inf")
